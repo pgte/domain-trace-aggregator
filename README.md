@@ -38,9 +38,9 @@ s.on('data', function(freq) {
 
 // Get overall server response latency
 var s =
-aggregator.watch('http-server-response/latency');
+aggregator.watch('http-server-response/latency/5');
 s.on('data', function(average, variance) {
-  console.log('HTTP server ');
+  console.log('HTTP server global 5 minute latency is, on average %d (+-%d)', average, variance);
 });
 
 // Get server request frequency on path /logout
