@@ -1,0 +1,23 @@
+{
+  "name": "domain-trace-aggregator",
+  "version": "0.0.1",
+  "description": "Domain Trace Aggregator",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/aggregator.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pgte/domain-trace-aggregator.git"
+  },
+  "keywords": [
+    "domains",
+    "trace",
+    "aggregate",
+    "I/O"
+  ],
+  "author": "pgte",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "1eb4f532d4fae4b1bcf01b072bd2a8804ba183ba"
+}
