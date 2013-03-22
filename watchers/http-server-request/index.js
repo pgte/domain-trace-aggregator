@@ -1,0 +1,1 @@
+exports.frequency = require('./frequency');

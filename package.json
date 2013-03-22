@@ -4,11 +4,18 @@
   "description": "Domain Trace Aggregator",
   "main": "index.js",
   "scripts": {
-    "test": "node test/aggregator.js"
+    "test": "node tests/aggregator.js"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/pgte/domain-trace-aggregator.git"
+  },
+  "dependencies": {
+    "microtime": "*"
+  },
+  "devDependencies": {
+    "tap": "*",
+    "domain-trace-stream": "*"
   },
   "keywords": [
     "domains",
