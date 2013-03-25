@@ -50,7 +50,7 @@ function TrafficCreator() {
         intervals.push(setInterval(function() {
           var d = domain.create();
           d.on('error', function(err) {
-            console.log('Erroor performing request ' + method + ' ' + path + ': ', err);
+            //console.log('Erroor performing request ' + method + ' ' + path + ': ', err);
           });
           d.run(function() {
             var requestOptions = {

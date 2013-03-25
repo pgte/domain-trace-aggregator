@@ -36,7 +36,7 @@ test('http server frequency filtered by URL works', function(t) {
   dts.pipe(a);
 
   var s = a.watch('http-server-request/frequency?path=/logout');
-  var validator = FrequencyValidator(t, 30, 50);
+  var validator = FrequencyValidator(t, 15, 25);
   s.pipe(validator);
 
   var tc = TrafficCreator();
@@ -48,7 +48,7 @@ test('http server frequency filtered by URL works', function(t) {
       request('GET', '/users', 50);
 
   setTimeout(function() {
-    t.ok(s.count > 0);
+    t.ok(validator.count > 0);
     t.end();
     server.end();
   }, 4000);
