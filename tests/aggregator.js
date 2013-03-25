@@ -1,5 +1,7 @@
 var test = require('tap').test;
 var TrafficCreator = require('./traffic_creator');
+var FrequencyValidator = require('./frequency_validator');
+
 var DomainTraceStream = require('domain-trace-stream');
 var Aggregator = require('..');
 
@@ -7,17 +9,11 @@ test('http server frequency works', function(t) {
   var dts = DomainTraceStream();
   var a = Aggregator();
   dts.pipe(a);
-  var count = 0;
 
   var s = a.watch('http-server-request/frequency');
-  s.on('readable', function() {
-    var freq;
-    while(freq = s.read()) {
-      t.type(freq, 'number');
-      t.ok(freq < 50 && freq > 30, 'emitted frequency is correct');
-      count ++;
-    }
-  });
+
+  var validator = FrequencyValidator(t, 30, 50);
+  s.pipe(validator);
 
   var tc = TrafficCreator();
   var server =
@@ -28,7 +24,7 @@ test('http server frequency works', function(t) {
       request('GET', '/users', 50);
 
   setTimeout(function() {
-    t.ok(count > 0);
+    t.ok(validator.count > 0);
     server.end();
     t.end();
   }, 4000);
@@ -38,17 +34,10 @@ test('http server frequency filtered by URL works', function(t) {
   var dts = DomainTraceStream();
   var a = Aggregator();
   dts.pipe(a);
-  var count = 0;
 
   var s = a.watch('http-server-request/frequency?path=/logout');
-  s.on('readable', function() {
-    var freq;
-    while(freq = s.read()) {
-      t.type(freq, 'number');
-      t.ok(freq > 15 && freq < 25, 'frequency is between 15 and 25');
-      count ++;
-    }
-  });
+  var validator = FrequencyValidator(t, 30, 50);
+  s.pipe(validator);
 
   var tc = TrafficCreator();
   var server =
@@ -59,7 +48,7 @@ test('http server frequency filtered by URL works', function(t) {
       request('GET', '/users', 50);
 
   setTimeout(function() {
-    t.ok(count > 0);
+    t.ok(s.count > 0);
     t.end();
     server.end();
   }, 4000);
