@@ -21,14 +21,21 @@ function Aggregator() {
     var watcher = watcherByEvent[spec.event];
     var path = spec.path;
     if (path) {
-      for(var i = 0 ; i < path.length; i++) {
-        watcher = watcher[path[i]];
-        if (! watcher) break;
+      while(path.length) {
+        var part = path.shift();
+        if (watcher.hasOwnProperty(part)) {
+          watcher = watcher[part];
+        } else {
+          path.unshift(part);
+        }
       }
     }
-    var watcherStream = watcher();
-    if (watcher) s.pipe(watcherStream);
-    return watcherStream;
+    if (watcher) {
+      path.unshift(spec.qs);
+      var watcherStream = watcher.apply(watcher, path);
+      s.pipe(watcherStream);
+      return watcherStream;      
+    }
   }  
 
   return s;

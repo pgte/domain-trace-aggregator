@@ -49,12 +49,16 @@ function TrafficCreator() {
       listening(function() {
         intervals.push(setInterval(function() {
           var d = domain.create();
+          d.on('error', function(err) {
+            console.log('Erroor performing request ' + method + ' ' + path + ': ', err);
+          });
           d.run(function() {
             var requestOptions = {
               hostname: 'localhost',
               port: port,
               method: method,
-              path: path
+              path: path,
+              agent: false
             };
             http.request(requestOptions, function(res) {
               res.resume();
@@ -69,7 +73,7 @@ function TrafficCreator() {
     ret.end =
     function end() {
       while(intervals.length) {
-        var interval = intervals.splice(0, 1)[0];
+        var interval = intervals.shift();
         if (interval) clearInterval(interval);
       }
       server.close();
