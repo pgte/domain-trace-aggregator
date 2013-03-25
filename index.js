@@ -2,7 +2,8 @@ var PassThrough = require('stream').PassThrough;
 var watchExpressionParser = require('./watch_expression_parser');
 
 var watchers = [
-  'http-server-request'
+  'http-server-request',
+  'http-server-response'
 ];
 
 var watcherByEvent = {};
@@ -27,6 +28,7 @@ function Aggregator() {
           watcher = watcher[part];
         } else {
           path.unshift(part);
+          break;
         }
       }
     }

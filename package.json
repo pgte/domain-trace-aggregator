@@ -4,7 +4,7 @@
   "description": "Domain Trace Aggregator",
   "main": "index.js",
   "scripts": {
-    "test": "node tests/aggregator.js"
+    "test": "node tests/http-server-request-frequency.js"
   },
   "repository": {
     "type": "git",
@@ -15,7 +15,9 @@
   },
   "devDependencies": {
     "tap": "*",
-    "domain-trace-stream": "*"
+    "domain-trace-stream": "*",
+    "moving-average": "*",
+    "microtime": "*"
   },
   "keywords": [
     "domains",

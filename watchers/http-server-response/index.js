@@ -1,0 +1,1 @@
+exports.latency = require('./latency');

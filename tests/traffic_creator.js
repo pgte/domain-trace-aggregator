@@ -6,7 +6,10 @@ var randomPort = function() {
 }
 
 module.exports =
-function TrafficCreator() {
+function TrafficCreator(maxLatency) {
+
+  if (! maxLatency) maxLatency = 300;
+
   var ret = {};
 
   ret.server =
